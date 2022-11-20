@@ -32,6 +32,8 @@ public class FirstFit {
             SearchHole(process.getKey(), process.getValue());
         }
     }
+     
+
 
     public static void main(String[] args) {
 
@@ -59,6 +61,7 @@ public class FirstFit {
 
         // iterate over process block and search for empty space
         FirstFitAlloc();
+
         print();
     }
 
