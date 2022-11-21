@@ -40,10 +40,11 @@ public class RoundRobin {
     public static int ExecuteProcess(int pid, int currentTime, int Quantam) {
         int BurstTime = BT.get(pid);
         System.out.println(BurstTime);
+        //  chech for the burst time if it is greater than quantam
         if (BurstTime > Quantam) {
             BT.put(pid, BurstTime - Quantam);
             GetReadyQueue(currentTime + Quantam);
-            System.out.println(readyqueue);
+       
             // remove from first and add to last as it has burst time left
             readyqueue.remove();
             readyqueue.add(pid);
@@ -58,10 +59,11 @@ public class RoundRobin {
             TAT.put(pid, CT.get(pid) - AT.get(pid));
             // calculate WT
             WT.put(pid, TAT.get(pid) - ORGBT.get(pid));
-
+            // remove the readyqueue as this process is completed
             readyqueue.remove();
             return currentTime + BurstTime;
         }
+
         return currentTime + Quantam;
     }
 
@@ -72,9 +74,10 @@ public class RoundRobin {
         GetReadyQueue(currentTime);
 
         while (!readyqueue.isEmpty()) {
+            // get the top process
             int PID = readyqueue.peek();
+            // execute it
             currentTime = ExecuteProcess(PID, currentTime, Quantam);
-            System.out.println("next processes - " + readyqueue);
         }
 
     }
