@@ -23,6 +23,7 @@ public class WorstFit {
         int MaxFragID = -1;
 
         for (int i = 0; i < MemoryBlocks.length; i++) {
+            
             if (MemoryBlocks[i] >= currentPSize && MemoryMap.get(i) == -1) {
                 // find a block with greater size and not been yet allocated a process
                 // try to find the fragment if process is added

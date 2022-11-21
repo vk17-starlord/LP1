@@ -80,9 +80,9 @@ public class PriortityNp {
 
         }
 
+        
+
     }
-
-
 
     public static void PrintChart() {
 
