@@ -4,7 +4,7 @@ import java.util.*;
 public class LRUCache {
 
     public static LinkedList<Integer> Frame = new LinkedList<Integer>();
-    public static int refArr[] = new int[] { 7, 0 , 1 , 2 , 0 , 3 , 0 , 4 , 2 , 3 , 0 , 3 , 2 , 1 , 2 , 0 , 1 , 7 , 0 , 1 };
+    public static int refArr[] = new int[] { 0, 2, 1, 6, 4, 0, 1, 0, 3, 1, 2, 1 };
 
     public static Integer MaxFrameSize = 4;
     public static Integer pageFault = 0;
@@ -59,7 +59,6 @@ public class LRUCache {
         }
     }
 
-    
     public static void main(String[] args) {
 
         for (int i = 0; i < refArr.length; i++) {

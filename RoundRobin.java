@@ -40,11 +40,11 @@ public class RoundRobin {
     public static int ExecuteProcess(int pid, int currentTime, int Quantam) {
         int BurstTime = BT.get(pid);
         System.out.println(BurstTime);
-        //  chech for the burst time if it is greater than quantam
+        // chech for the burst time if it is greater than quantam
         if (BurstTime > Quantam) {
             BT.put(pid, BurstTime - Quantam);
             GetReadyQueue(currentTime + Quantam);
-       
+
             // remove from first and add to last as it has burst time left
             readyqueue.remove();
             readyqueue.add(pid);
@@ -99,29 +99,35 @@ public class RoundRobin {
 
     public static void main(String[] args) {
 
-        int Quantam = 2;
+        int Quantam = 100;
         // status -1 means not complete
         PID.put(1, -1);
         PID.put(2, -1);
         PID.put(3, -1);
         PID.put(4, -1);
-
+        PID.put(5, -1);
+        PID.put(6, -1);
         // structure of hashmap - PID , AT
         AT.put(1, 0);
-        AT.put(2, 1);
-        AT.put(3, 2);
-        AT.put(4, 4);
-
+        AT.put(2, 50);
+        AT.put(3, 130);
+        AT.put(4, 190);
+        AT.put(5, 210);
+        AT.put(6, 350);
         // structure of hashmap - PID ,BT
-        BT.put(1, 5);
-        BT.put(2, 4);
-        BT.put(3, 2);
-        BT.put(4, 1);
+        BT.put(1, 250);
+        BT.put(2, 170);
+        BT.put(3, 75);
+        BT.put(4, 100);
+        BT.put(5, 130);
+        BT.put(6, 50);
 
-        ORGBT.put(1, 5);
-        ORGBT.put(2, 4);
-        ORGBT.put(3, 2);
-        ORGBT.put(4, 1);
+        ORGBT.put(1, 250);
+        ORGBT.put(2, 170);
+        ORGBT.put(3, 75);
+        ORGBT.put(4, 100);
+        ORGBT.put(5, 130);
+        ORGBT.put(6, 50);
 
         GanttChart(Quantam);
         PrintChart();

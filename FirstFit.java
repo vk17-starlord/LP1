@@ -1,71 +1,66 @@
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FirstFit {
-    public static HashMap<Integer, Integer> MemoryBlock = new HashMap<Integer, Integer>();
-    public static HashMap<Integer, Integer> ProcessID = new HashMap<Integer, Integer>();
-    public static HashMap<Integer, Integer> ProcessBlock = new HashMap<Integer, Integer>();
-    public static HashMap<Integer, Integer> MemoryID = new HashMap<Integer, Integer>();
 
-    public static void SearchHole(int pid, int pspace) {
-        // iterate over memory block and assign memory block where space is more than process size 
+    public static int MemoryBlocks[] = new int[] { 25, 40, 100, 85, 10 };
 
-        for (Map.Entry<Integer, Integer> entry : MemoryBlock.entrySet()) {
-            int mid = entry.getKey();
-            int msize = entry.getValue();
+    public static int ProcessSize[] = new int[] { 10, 15, 110, 75, 40, 50 };
 
-            if (pspace < msize && MemoryID.get(mid) == -1) {
-                MemoryID.put(mid, pid);
-                ProcessID.put(pid, mid);
+    // will make a key value pair structure to hold the process id and block id
+    // e.g 1 : 2 -> means process id 1 is allocated to block 2
+    public static HashMap<Integer, Integer> ProcessMap = new HashMap<Integer, Integer>();
+
+    // will make a key value pair structure to hold memory id and process it has
+    // been allocated to
+    public static HashMap<Integer, Integer> MemoryMap = new HashMap<Integer, Integer>();
+
+    // will search for the first hole which is bigger than the size
+    public static void FirstFitAlloc(int id) {
+
+        int currentPSize = ProcessSize[id];
+
+        for (int i = 0; i < MemoryBlocks.length; i++) {
+            if (MemoryBlocks[i] >= currentPSize && MemoryMap.get(i) == -1) {
+
+                ProcessMap.put(id, i);
+                MemoryMap.put(i, id);
+                
                 return;
             }
-
         }
-    }
 
-    public static void print() {
-        for (Map.Entry<Integer, Integer> entry : ProcessID.entrySet()) {
-            String str = entry.getValue() == -1 ? "No Space Allocated" : entry.getValue().toString();
-            System.out.println(entry.getKey() + " - " + str);
-        }
     }
-
-    public static void FirstFitAlloc() {
-        // iterate over all the process and find the hole in memory block
-        for (Map.Entry<Integer, Integer> process : ProcessBlock.entrySet()) {
-            SearchHole(process.getKey(), process.getValue());
-        }
-    }
-     
-
 
     public static void main(String[] args) {
 
-        ProcessBlock.put(1, 212);
-        ProcessBlock.put(2, 417);
-        ProcessBlock.put(3, 112);
-        ProcessBlock.put(4, 426);
+        // initially no process is allocated to each block
+        MemoryMap.put(0, -1);
+        MemoryMap.put(1, -1);
+        MemoryMap.put(2, -1);
+        MemoryMap.put(3, -1);
+        MemoryMap.put(4, -1);
 
-        ProcessID.put(1, -1);
-        ProcessID.put(2, -1);
-        ProcessID.put(3, -1);
-        ProcessID.put(4, -1);
+        for (int i = 0; i < ProcessSize.length; i++) {
+            // no block is allocated to process size with id i
+            ProcessMap.put(i, -1);
+            // send each process id to find the suitable block
+            FirstFitAlloc(i);
+        }
 
-        MemoryBlock.put(1, 100);
-        MemoryBlock.put(2, 200);
-        MemoryBlock.put(3, 300);
-        MemoryBlock.put(4, 300);
-        MemoryBlock.put(5, 600);
+        for (Map.Entry<Integer, Integer> Hmap : ProcessMap.entrySet()) {
+            int Process_ID = Hmap.getKey();
+            int Block_ID = Hmap.getValue();
 
-        MemoryID.put(1, -1);
-        MemoryID.put(2, -1);
-        MemoryID.put(3, -1);
-        MemoryID.put(4, -1);
-        MemoryID.put(5, -1);
+            if (Block_ID != -1) {
+                System.out.println("Process ID - " + Process_ID + " Process Size - " + ProcessSize[Process_ID]
+                        + " Block ID - " + Block_ID + " Block Size " + MemoryBlocks[Block_ID]);
+            } else {
+                System.out.println("Process ID - " + Process_ID + " Process Size - " + ProcessSize[Process_ID]
+                        + " Block ID - " + Block_ID + " Block Size " + " No Block Allocated :(");
 
-        // iterate over process block and search for empty space
-        FirstFitAlloc();
+            }
+        }
 
-        print();
     }
-
 }

@@ -26,56 +26,19 @@ public class SJF_NonPreemptive {
     }
 
     public static void main(String[] args) {
-        int pid[] = new int[] { 1, 2, 3, 4 };
-        int at[] = new int[] { 1, 2, 1, 4 };
-        int bt[] = new int[] { 3, 4, 2, 4 };
+        int pid[] = new int[] { 1, 2, 3, 4, 5 };
+        int at[] = new int[] { 0 , 2, 4, 6, 7 };
+        int bt[] = new int[] { 5 , 3, 2, 4, 1 };
         int ct[] = new int[5];
         int tat[] = new int[5];
         int wt[] = new int[5];
 
         // sort the input according to the at
 
-        for (int i = 0; i < pid.length; i++) {
-            for (int j = i + 1; j < pid.length; j++) {
-                int temp = 0;
-                if (at[i] > at[j]) {
-                    temp = at[i];
-                    at[i] = at[j];
-                    at[j] = temp;
-
-                    temp = bt[i];
-                    bt[i] = bt[j];
-                    bt[j] = temp;
-
-                    temp = pid[i];
-                    pid[i] = pid[j];
-                    pid[j] = temp;
-                }
-
-            }
-        }
+      
 
         // sort the input according to bt
 
-        for (int i = 0; i < pid.length; i++) {
-            for (int j = i + 1; j < pid.length; j++) {
-                int temp = 0;
-                if (bt[i] > bt[j]) {
-                    temp = at[i];
-                    at[i] = at[j];
-                    at[j] = temp;
-
-                    temp = bt[i];
-                    bt[i] = bt[j];
-                    bt[j] = temp;
-
-                    temp = pid[i];
-                    pid[i] = pid[j];
-                    pid[j] = temp;
-                }
-
-            }
-        }
 
         calculate(at, bt, wt, ct, tat);
 

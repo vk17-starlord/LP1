@@ -36,17 +36,17 @@ public class PriortityNp {
     public static int getHighestPriority(ArrayList<Integer> ReadyQueue) {
         int highestPID = ReadyQueue.get(0);
         int highestPriority = Priority.get(ReadyQueue.get(0));
+
         for (Integer processID : ReadyQueue) {
             if (highestPriority > Priority.get(processID)) {
                 highestPriority = Priority.get(processID);
                 highestPID = processID;
             }
-
         }
-
         return highestPID;
     }
 
+    
     public static int ExecuteTask(int currtime, int pid) {
         int EndTime = currtime + BT.get(pid);
         // update the completion time table
@@ -66,9 +66,8 @@ public class PriortityNp {
         // get the ready queue
         // get the highest priority pid
         // execute it and calculate the WT , TAT
-
         int currentTime = 0;
-
+        
         while (areAllProcessExecuted() != true) {
             // step - 1 -> get all the process which are to be executed
             ArrayList<Integer> ReadyQueue = getReadyQueue(currentTime);
@@ -82,6 +81,8 @@ public class PriortityNp {
         }
 
     }
+
+
 
     public static void PrintChart() {
 

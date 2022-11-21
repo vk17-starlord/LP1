@@ -1,75 +1,74 @@
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NextFit {
-    public static LinkedList<Integer> ProcessList = new LinkedList<Integer>();
-    public static LinkedList<Integer> MemorySpace = new LinkedList<Integer>();
 
-    public static HashMap<Integer, Integer> MemoryMap = new HashMap<Integer, Integer>();
+    public static int MemoryBlocks[] = new int[] { 25, 40, 100, 85, 10 };
 
+    public static int ProcessSize[] = new int[] { 10, 15, 110, 75, 40, 50 };
+
+    // will make a key value pair structure to hold the process id and block id
+    // e.g 1 : 2 -> means process id 1 is allocated to block 2
     public static HashMap<Integer, Integer> ProcessMap = new HashMap<Integer, Integer>();
 
-    // will store the next element to start with
+    // will make a key value pair structure to hold memory id and process it has
+    // been allocated to
+    public static HashMap<Integer, Integer> MemoryMap = new HashMap<Integer, Integer>();
+
     public static Integer cache_pointer = 0;
 
-    public static void FindNextSpot(int id, int space) {
-        int eleVisited = 0;
-        while (eleVisited < MemorySpace.size()) {
-            if (MemorySpace.get(cache_pointer) > space && MemoryMap.get(cache_pointer) < 0) {
+    public static void NextFitAlloc(int id) {
+        System.out.println("starting search from - "+cache_pointer);
+        int currentPSize = ProcessSize[id];
+
+        int count = 0;
+
+        while (count != MemoryBlocks.length - 1) {
+
+            if (MemoryBlocks[cache_pointer] > currentPSize
+                    && MemoryMap.get(cache_pointer) == -1) {
+
                 ProcessMap.put(id, cache_pointer);
                 MemoryMap.put(cache_pointer, id);
 
-                cache_pointer = (cache_pointer + 1) % MemoryMap.size();
-                break;
+                return;
             }
-            // will search in cycle for space
-            cache_pointer = (cache_pointer + 1) % MemoryMap.size();
-            eleVisited++;
+
+            cache_pointer = (cache_pointer + 1) % MemoryBlocks.length;
+            count++;
         }
 
-    }
-
-    public static void NextFitAlloc() {
-        for (int i = 0; i < ProcessList.size(); i++) {
-            FindNextSpot(i, ProcessList.get(i));
-        }
     }
 
     public static void main(String[] args) {
-        ProcessList.add(30);
-        ProcessList.add(5);
-        ProcessList.add(40);
 
-        MemorySpace.add(10);
-        MemorySpace.add(25);
-        MemorySpace.add(35);
-        MemorySpace.add(10);
-        MemorySpace.add(25);
-        MemorySpace.add(35);
-
-        // will tell which process is allocated to which block
-        ProcessMap.put(0, -1);
-        ProcessMap.put(1, -1);
-        ProcessMap.put(2, -1);
-
-        // will tell if block is free or not
+        // initially no process is allocated to each block
         MemoryMap.put(0, -1);
         MemoryMap.put(1, -1);
         MemoryMap.put(2, -1);
         MemoryMap.put(3, -1);
         MemoryMap.put(4, -1);
-        MemoryMap.put(5, -1);
-        NextFitAlloc();
 
-        for (Map.Entry<Integer, Integer> mEntry : MemoryMap.entrySet()) {
-            System.out.println("MID " + mEntry.getKey() + " - " + MemorySpace.get(mEntry.getKey()));
+        for (int i = 0; i < ProcessSize.length; i++) {
+            // no block is allocated to process size with id i
+            ProcessMap.put(i, -1);
+            // send each process id to find the suitable block
+            NextFitAlloc(i);
         }
-        System.out.println('\n');
-        for (Map.Entry<Integer, Integer> mEntry : ProcessMap.entrySet()) {
-            System.out.println("Process ID - " + mEntry.getKey() + " Process Size - " + ProcessList.get(mEntry.getKey())
-                    + " Memory Block - " + mEntry.getValue());
+
+        for (Map.Entry<Integer, Integer> Hmap : ProcessMap.entrySet()) {
+            int Process_ID = Hmap.getKey();
+            int Block_ID = Hmap.getValue();
+
+            if (Block_ID != -1) {
+                System.out.println("Process ID - " + Process_ID + " Process Size - " + ProcessSize[Process_ID]
+                        + " Block ID - " + Block_ID + " Block Size " + MemoryBlocks[Block_ID]);
+            } else {
+                System.out.println("Process ID - " + Process_ID + " Process Size - " + ProcessSize[Process_ID]
+                        + " Block ID - " + Block_ID + " Block Size " + " No Block Allocated :(");
+
+            }
         }
-        System.out.println('\n');
 
     }
-
 }
