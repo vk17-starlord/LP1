@@ -7,7 +7,7 @@ public class Optimal {
     public static int refArr[] = new int[] { 7, 0 , 1 , 2 , 0 , 3 , 0 , 4 , 2 , 3 , 0 , 3 , 2 , 1 , 2 , 0 , 1 , 7 , 0 , 1 };
     
     public static Integer MaxFrameSize = 4;
-    public static Integer pageFault = 0;
+    public static Integer pageFault = 0;    
     public static Integer pageHit = 0;
 
     public static void OptimalReplace(int ref, int index) {
