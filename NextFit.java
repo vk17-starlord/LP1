@@ -18,7 +18,7 @@ public class NextFit {
     public static Integer cache_pointer = 0;
 
     public static void NextFitAlloc(int id) {
-        System.out.println("starting search from - "+cache_pointer);
+        System.out.println("starting search from - " + cache_pointer);
         int currentPSize = ProcessSize[id];
 
         int count = 0;
@@ -35,6 +35,7 @@ public class NextFit {
             }
 
             cache_pointer = (cache_pointer + 1) % MemoryBlocks.length;
+            System.out.println(cache_pointer);
             count++;
         }
 

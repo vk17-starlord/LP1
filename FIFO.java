@@ -8,7 +8,7 @@ public class FIFO {
     public static Integer pageHit = 0;
 
     public static void VirtualPaging(int refString) {
-        
+
         if (Frame.contains(refString)) {
             // increment the page Hit
             pageHit++;
@@ -16,14 +16,15 @@ public class FIFO {
         }
         // increment the page Fault
         pageFault++;
+
         int size = Frame.size();
         // if there is space in frame then add refstring to the frame
         if (size < Max_Framesize) {
             Frame.add(refString);
-
             cachePointer = (cachePointer + 1) % Max_Framesize;
             return;
         } else {
+            // updaye
             Frame.set(cachePointer, refString);
             cachePointer = (cachePointer + 1) % Max_Framesize;
             return;
@@ -32,12 +33,13 @@ public class FIFO {
     }
 
     public static void main(String[] args) {
+
         int refString[] = new int[] { 7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2 };
         System.out.println(refString.length);
 
         // iterate over refstring array
         for (Integer i : refString) {
-//   0 
+            // 0
             VirtualPaging(i);
 
         }

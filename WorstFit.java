@@ -10,20 +10,21 @@ public class WorstFit {
     // will make a key value pair structure to hold the process id and block id
     // e.g 1 : 2 -> means process id 1 is allocated to block 2
     public static HashMap<Integer, Integer> ProcessMap = new HashMap<Integer, Integer>();
-
     // will make a key value pair structure to hold memory id and process it has
     // been allocated to
     public static HashMap<Integer, Integer> MemoryMap = new HashMap<Integer, Integer>();
 
     // will search for the first hole which is bigger than the size
-    public static void BestFitAlloc(int id) {
+    public static void WorstFit(int id) {
 
         int currentPSize = ProcessSize[id];
+
         int MaxFragmentSize = Integer.MIN_VALUE;
+
         int MaxFragID = -1;
 
         for (int i = 0; i < MemoryBlocks.length; i++) {
-            
+
             if (MemoryBlocks[i] >= currentPSize && MemoryMap.get(i) == -1) {
                 // find a block with greater size and not been yet allocated a process
                 // try to find the fragment if process is added
@@ -34,6 +35,7 @@ public class WorstFit {
                     MaxFragID = i;
                 }
             }
+
         }
 
         if (MaxFragID != -1) {
@@ -55,7 +57,7 @@ public class WorstFit {
             // no block is allocated to process size with id i
             ProcessMap.put(i, -1);
             // send each process id to find the suitable block
-            BestFitAlloc(i);
+            WorstFit(i);
         }
 
         for (Map.Entry<Integer, Integer> Hmap : ProcessMap.entrySet()) {

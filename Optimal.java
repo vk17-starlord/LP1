@@ -5,7 +5,7 @@ public class Optimal {
 
     public static LinkedList<Integer> Frame = new LinkedList<Integer>();
     public static int refArr[] = new int[] { 7, 0 , 1 , 2 , 0 , 3 , 0 , 4 , 2 , 3 , 0 , 3 , 2 , 1 , 2 , 0 , 1 , 7 , 0 , 1 };
-
+    
     public static Integer MaxFrameSize = 4;
     public static Integer pageFault = 0;
     public static Integer pageHit = 0;
@@ -14,21 +14,29 @@ public class Optimal {
 
         int Maxdistance = Integer.MIN_VALUE;
         int farElement = refArr[index];
-   
+
+
+        // 7 0 1
 
         for (int i = 0; i < Frame.size(); i++) {
+            
+    
             int currentElement = Frame.get(i);
             int Pointer = index;
+            // pointer = 3
             int currDistance = 0;
+            // current = 0
 
             while (Pointer < refArr.length) {
+
                 if (refArr[Pointer] == currentElement) {
                     break;
                 }
                 currDistance++;
                 Pointer++;
             }
-
+            
+      
             if (Maxdistance < currDistance) {
                 Maxdistance = currDistance;
                 farElement = i;
@@ -36,6 +44,8 @@ public class Optimal {
 
         }
       
+        // 7 
+        // replace in frame
         Frame.set(farElement, ref);
     }
 
@@ -65,8 +75,9 @@ public class Optimal {
 
     public static void main(String[] args) {
        
+
         for (int i = 0; i < refArr.length; i++) {
-          
+        
             RequestFrame(refArr[i], i);
         }
 
